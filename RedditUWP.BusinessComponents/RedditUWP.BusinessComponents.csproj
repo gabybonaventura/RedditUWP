@@ -128,6 +128,16 @@
       <Version>6.2.9</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RedditUWP.API\RedditUWP.API.csproj">
+      <Project>{cd41414b-7779-488d-9858-e3bb975e9742}</Project>
+      <Name>RedditUWP.API</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RedditUWP.DataAccess\RedditUWP.DataAccess.csproj">
+      <Project>{2e4b93dd-bc19-46d0-8cba-96ec082d0e5d}</Project>
+      <Name>RedditUWP.DataAccess</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
