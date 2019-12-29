@@ -17,6 +17,22 @@ namespace RedditUWP.ViewModels
             this.Thumbnail = "https://a.thumbs.redditmedia.com/NPbKE2FAaO97ci2jIVCy5L04nEWd60_nS52LdmMQMV4.jpg";
             this.Author = "author";
             this.Title = "title";
+
+            this.Posts = new ObservableCollection<RedditPost>();
+            this.Posts.Add(
+                new RedditPost()
+                {
+                    Title = "post1",
+                    Author = "asd",
+                    Thumbnail = "https://a.thumbs.redditmedia.com/NPbKE2FAaO97ci2jIVCy5L04nEWd60_nS52LdmMQMV4.jpg"
+                });
+            this.Posts.Add(
+                new RedditPost()
+                {
+                    Title = "post2",
+                    Author = "asfasdd",
+                    Thumbnail = "https://a.thumbs.redditmedia.com/NPbKE2FAaO97ci2jIVCy5L04nEWd60_nS52LdmMQMV4.jpg"
+                });
         }
         #endregion
         #region Properties

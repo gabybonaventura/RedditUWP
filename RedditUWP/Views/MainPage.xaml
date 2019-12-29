@@ -9,17 +9,50 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     DataContext="{Binding MainViewModel, Source={StaticResource Locator}}">
 
-    <Grid
-        Margin="20">
-        <StackPanel>
-            <TextBlock
+    <Grid>
+        <NavigationView
+            IsBackButtonVisible="Collapsed"
+            IsSettingsVisible="False"
+            PaneDisplayMode="Left"
+            MenuItemsSource="{Binding Posts}">
+            <NavigationView.Header>
+                <TextBlock
+                Foreground="Black"
                 Text="{Binding Author}"/>
-            <Image
-                Height="100"
-                VerticalAlignment="Top"
-                Source="{Binding Thumbnail}"/>
-            <TextBlock
-                Text="{Binding Title}"/>
-        </StackPanel>
+            </NavigationView.Header>
+            <NavigationView.PaneFooter>
+                <TextBlock
+                        Foreground="OrangeRed"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Text="Dismiss all"/>
+            </NavigationView.PaneFooter>
+            <NavigationView.PaneHeader>
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Text="Reddit Posts"/>
+            </NavigationView.PaneHeader>
+            <NavigationView.MenuItemTemplate>
+                <DataTemplate>
+                    <TextBlock
+                        Text="{Binding Title}"/>
+                </DataTemplate>
+            </NavigationView.MenuItemTemplate>
+            <Frame>
+                <StackPanel
+                    Margin="20"
+                    Background="White">
+                    <Image
+                        Height="100"
+                        VerticalAlignment="Top"
+                        Source="{Binding Thumbnail}"/>
+                    <TextBlock
+                        Padding="0,10"
+                        Text="{Binding Title}"/>
+                </StackPanel>
+
+            </Frame>
+        </NavigationView>
     </Grid>
 </Page>
