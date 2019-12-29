@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RedditUWP.Entities
+namespace RedditUWP.Models
 {
-    public class Class1
+    class RedditPost
     {
+        public int Id { get; set; }
     }
 }

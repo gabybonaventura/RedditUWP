@@ -1,18 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+﻿using Autofac;
+using RedditUWP.ViewModels;
+using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace RedditUWP
@@ -29,7 +21,24 @@ namespace RedditUWP
         public App()
         {
             this.InitializeComponent();
+
+            Container = ConfigureServices();
+
             this.Suspending += OnSuspending;
+        }
+
+        public static IContainer Container { get; set; }
+
+        private IContainer ConfigureServices()
+        {
+            var containerBuilder = new ContainerBuilder();
+
+            containerBuilder.RegisterType<MainViewModel>()
+                .SingleInstance();
+
+            var container = containerBuilder.Build();
+
+            return container;
         }
 
         /// <summary>
