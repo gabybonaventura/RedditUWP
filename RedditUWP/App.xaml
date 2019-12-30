@@ -7,6 +7,19 @@
 
     <Application.Resources>
         <viewmodel:InstanceLocator x:Key="Locator"/>
+        <Style TargetType="NavigationViewItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="NavigationViewItem">
+                        <Grid x:Name="LayoutRoot" Background="{TemplateBinding Background}" Height="150" Control.IsTemplateFocusTarget="True">
+                            <Grid x:Name="ContentGrid" HorizontalAlignment="Left" Height="150">
+                                <ContentPresenter x:Name="ContentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentTransitions="{TemplateBinding ContentTransitions}" Grid.Column="1" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            </Grid>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Application.Resources>
 
 
