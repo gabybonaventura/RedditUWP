@@ -119,11 +119,11 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Models\RedditPost.cs" />
     <Compile Include="Services\InstanceLocator.cs" />
     <Compile Include="ViewModels\Base\BindableBase.cs" />
     <Compile Include="ViewModels\Base\DelegateCommand.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\RedditPostItemViewModel.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -161,6 +161,9 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.9</Version>
     </PackageReference>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Uwp.Managed">
+      <Version>2.0.1</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RedditUWP.API\RedditUWP.API.csproj">
@@ -175,6 +178,13 @@
       <Project>{2e4b93dd-bc19-46d0-8cba-96ec082d0e5d}</Project>
       <Name>RedditUWP.DataAccess</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RedditUWP.Entities\RedditUWP.Entities.csproj">
+      <Project>{a3a0c52f-e75f-4c52-9dfd-db610fd0cdb6}</Project>
+      <Name>RedditUWP.Entities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

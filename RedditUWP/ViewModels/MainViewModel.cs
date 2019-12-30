@@ -1,4 +1,4 @@
-﻿using RedditUWP.Models;
+﻿using RedditUWP.Entities;
 using RedditUWP.ViewModels.Base;
 using System.Collections.ObjectModel;
 
@@ -8,7 +8,7 @@ namespace RedditUWP.ViewModels
     {
         #region Attributes
         private string id, title, author, thumbnail;
-        private ObservableCollection<RedditPost> posts;
+        private ObservableCollection<RedditPostItemViewModel> posts;
         #endregion
         #region Constructors
         public MainViewModel()
@@ -18,16 +18,16 @@ namespace RedditUWP.ViewModels
             this.Author = "author";
             this.Title = "title";
 
-            this.Posts = new ObservableCollection<RedditPost>();
+            this.Posts = new ObservableCollection<RedditPostItemViewModel>();
             this.Posts.Add(
-                new RedditPost()
+                new RedditPostItemViewModel()
                 {
                     Title = "post1",
                     Author = "asd",
-                    Thumbnail = "https://a.thumbs.redditmedia.com/NPbKE2FAaO97ci2jIVCy5L04nEWd60_nS52LdmMQMV4.jpg"
+                    Thumbnail = "https://b.thumbs.redditmedia.com/qMDQv5vmOiQ9GGt6MpjlGvfXnHMXM4VqdvrDzJ9LCnU.jpg"
                 });
             this.Posts.Add(
-                new RedditPost()
+                new RedditPostItemViewModel()
                 {
                     Title = "post2",
                     Author = "asfasdd",
@@ -36,7 +36,7 @@ namespace RedditUWP.ViewModels
         }
         #endregion
         #region Properties
-        public ObservableCollection<RedditPost> Posts
+        public ObservableCollection<RedditPostItemViewModel> Posts
         {
             get
             {
@@ -90,6 +90,15 @@ namespace RedditUWP.ViewModels
             {
                 this.SetProperty(ref this.thumbnail, value);
             }
+        }
+        #endregion
+        #region Methods
+        public void PostSelected(RedditPostItemViewModel redditPostItemViewModel)
+        {
+            this.Id = redditPostItemViewModel.Id;
+            this.Title = redditPostItemViewModel.Title;
+            this.Thumbnail = redditPostItemViewModel.Thumbnail;
+            redditPostItemViewModel.ItWasRead = true;
         }
         #endregion
     }

@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace RedditUWP.Models
+namespace RedditUWP.Entities
 {
-    class RedditPost
+    public class RedditPost
     {
         public string Id { get; set; }
         public string Title { get; set; }

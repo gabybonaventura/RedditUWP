@@ -121,6 +121,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RedditPost.cs" />
     <EmbeddedResource Include="Properties\RedditUWP.Entities.rd.xml" />
   </ItemGroup>
   <ItemGroup>
