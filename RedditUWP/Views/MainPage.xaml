@@ -23,11 +23,20 @@
                 Text="{Binding Author}"/>
             </NavigationView.Header>
             <NavigationView.PaneFooter>
-                <TextBlock
-                        Foreground="OrangeRed"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Text="Dismiss all"/>
+                <Grid>
+                    <TextBlock
+                            Foreground="OrangeRed"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Text="Dismiss all"/>
+                    <i:Interaction.Behaviors>
+                        <core:EventTriggerBehavior EventName="Tapped">
+                            <core:EventTriggerBehavior.Actions>
+                                <core:InvokeCommandAction Command="{Binding DismissAllPostCommand, Mode=TwoWay}" />
+                            </core:EventTriggerBehavior.Actions>
+                        </core:EventTriggerBehavior>
+                    </i:Interaction.Behaviors>
+                </Grid>
             </NavigationView.PaneFooter>
             <NavigationView.PaneHeader>
                 <TextBlock

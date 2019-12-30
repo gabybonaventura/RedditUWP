@@ -7,6 +7,9 @@ namespace RedditUWP.ViewModels
 {
     class RedditPostItemViewModel : RedditPost
     {
+        #region Atributtes
+        private bool itWasRemoved;
+        #endregion
         #region Commands
         public ICommand ItemSelectedCommand
         {
@@ -21,12 +24,14 @@ namespace RedditUWP.ViewModels
         #region Methods
         private void ItemSelected()
         {
+            if (this.itWasRemoved)
+                return;
             App.Container.Resolve<MainViewModel>().PostSelected(this);
         }
         private void Dismiss()
         {
-
             App.Container.Resolve<MainViewModel>().DismissPost(this);
+            this.itWasRemoved = true;
         }
         #endregion
     }

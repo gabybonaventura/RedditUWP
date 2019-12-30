@@ -1,6 +1,7 @@
 ﻿using RedditUWP.Entities;
 using RedditUWP.ViewModels.Base;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace RedditUWP.ViewModels
 {
@@ -92,6 +93,12 @@ namespace RedditUWP.ViewModels
             }
         }
         #endregion
+        #region Commands
+        public ICommand DismissAllPostCommand
+        {
+            get { return new DelegateCommand(DismissAllPost, null); }
+        }
+        #endregion
         #region Methods
         public void PostSelected(RedditPostItemViewModel redditPostItemViewModel)
         {
@@ -103,6 +110,10 @@ namespace RedditUWP.ViewModels
         public void DismissPost(RedditPostItemViewModel redditPostItemViewModel)
         {
             this.Posts.Remove(redditPostItemViewModel);
+        }
+        private void DismissAllPost()
+        {
+            this.Posts = new ObservableCollection<RedditPostItemViewModel>();
         }
         #endregion
     }
