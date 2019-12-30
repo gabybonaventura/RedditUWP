@@ -1,6 +1,9 @@
-﻿using RedditUWP.Entities;
+﻿using AutoMapper;
+using RedditUWP.BusinessComponents.Interfaces;
+using RedditUWP.Entities;
 using RedditUWP.ViewModels.Base;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -11,34 +14,24 @@ namespace RedditUWP.ViewModels
         #region Attributes
         private string id, title, author, thumbnail;
         private ObservableCollection<RedditPostItemViewModel> posts;
+        private IRedditPostLogic redditPostLogic;
+        private IMapper mapper;
         #endregion
         #region Constructors
-        public MainViewModel()
+        public MainViewModel(IRedditPostLogic redditPostLogic, IMapper mapper)
         {
+            this.redditPostLogic = redditPostLogic;
+            this.mapper = mapper;
+
             this.Id = "10";
             this.Thumbnail = "https://a.thumbs.redditmedia.com/NPbKE2FAaO97ci2jIVCy5L04nEWd60_nS52LdmMQMV4.jpg";
             this.Author = "author";
             this.Title = "title";
+            
+            var postsReddit = this.redditPostLogic.GetRedditPost();
 
-            this.Posts = new ObservableCollection<RedditPostItemViewModel>();
-            this.Posts.Add(
-                new RedditPostItemViewModel()
-                {
-                    Title = "post1",
-                    Author = "asd",
-                    Thumbnail = "https://b.thumbs.redditmedia.com/qMDQv5vmOiQ9GGt6MpjlGvfXnHMXM4VqdvrDzJ9LCnU.jpg",
-                    NumComments = 200,
-                    CreatedUTC = DateTime.Now.AddHours(-1)
-                });
-            this.Posts.Add(
-                new RedditPostItemViewModel()
-                {
-                    Title = "post2",
-                    Author = "asfasdd",
-                    Thumbnail = "https://a.thumbs.redditmedia.com/NPbKE2FAaO97ci2jIVCy5L04nEWd60_nS52LdmMQMV4.jpg",
-                    NumComments = 302,
-                    CreatedUTC = DateTime.Now.AddHours(-3)
-                });
+            this.Posts = new ObservableCollection<RedditPostItemViewModel>
+                            (this.mapper.Map<List<RedditPostItemViewModel>>(postsReddit));
         }
         #endregion
         #region Properties

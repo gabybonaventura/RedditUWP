@@ -120,7 +120,9 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IRedditPostLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RedditPostLogic.cs" />
     <EmbeddedResource Include="Properties\RedditUWP.BusinessComponents.rd.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -136,6 +138,10 @@
     <ProjectReference Include="..\RedditUWP.DataAccess\RedditUWP.DataAccess.csproj">
       <Project>{2e4b93dd-bc19-46d0-8cba-96ec082d0e5d}</Project>
       <Name>RedditUWP.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RedditUWP.Entities\RedditUWP.Entities.csproj">
+      <Project>{A3A0C52F-E75F-4C52-9DFD-DB610FD0CDB6}</Project>
+      <Name>RedditUWP.Entities</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

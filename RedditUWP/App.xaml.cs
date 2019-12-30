@@ -1,4 +1,11 @@
 ﻿using Autofac;
+using AutoMapper;
+using RedditUWP.API;
+using RedditUWP.API.Interfaces;
+using RedditUWP.API.Models;
+using RedditUWP.BusinessComponents;
+using RedditUWP.BusinessComponents.Interfaces;
+using RedditUWP.Entities;
 using RedditUWP.ViewModels;
 using System;
 using Windows.ApplicationModel;
@@ -35,6 +42,34 @@ namespace RedditUWP
 
             containerBuilder.RegisterType<MainViewModel>()
                 .SingleInstance();
+
+            containerBuilder.RegisterType<RedditPostLogic>().As<IRedditPostLogic>();
+            containerBuilder.RegisterType<APIManagement>().As<IAPIManagement>();
+
+            var mapperConfiguration = new MapperConfiguration(cfg => {
+                cfg.CreateMap<RedditPost, RedditPostItemViewModel>();
+                cfg.CreateMap<Child, RedditPost>()
+                .ForMember(dest => dest.Author, opt => opt.MapFrom(src => src.Data.Author))
+                .ForMember(
+                    dest => dest.CreatedUTC,
+                    opt => opt.MapFrom(src =>
+                    DateTimeOffset.FromUnixTimeSeconds(src.Data.CreatedUtc).UtcDateTime
+                        ))
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Data.Id))
+                .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Data.Title))
+                .ForMember(dest => dest.NumComments, opt => opt.MapFrom(src => src.Data.NumComments))
+                .ForMember(dest => dest.Thumbnail, opt => opt.MapFrom(src => src.Data.Thumbnail));
+            });
+            containerBuilder.Register(
+                ctx =>
+                {
+                    var scope = ctx.Resolve<ILifetimeScope>();
+                    return new Mapper(
+                        mapperConfiguration,
+                        scope.Resolve);
+                })
+                .As<IMapper>()
+                .InstancePerLifetimeScope();
 
             var container = containerBuilder.Build();
 
