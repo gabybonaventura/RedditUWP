@@ -142,6 +142,13 @@
                                     Margin="2"
                                     VerticalAlignment="Center"
                                     Text="Dismiss Post"/>
+                                <i:Interaction.Behaviors>
+                                    <core:EventTriggerBehavior EventName="Tapped">
+                                        <core:EventTriggerBehavior.Actions>
+                                            <core:InvokeCommandAction Command="{Binding DismissCommand, Mode=TwoWay}" />
+                                        </core:EventTriggerBehavior.Actions>
+                                    </core:EventTriggerBehavior>
+                                </i:Interaction.Behaviors>
                             </StackPanel>
                             <TextBlock
                                 Foreground="DarkOrange"

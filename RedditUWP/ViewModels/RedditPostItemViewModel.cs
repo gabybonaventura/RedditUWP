@@ -12,11 +12,21 @@ namespace RedditUWP.ViewModels
         {
             get { return new DelegateCommand(ItemSelected, null); }
         }
+        public ICommand DismissCommand
+        {
+            get { return new DelegateCommand(Dismiss, null); }
+        }
+
         #endregion
         #region Methods
         private void ItemSelected()
         {
             App.Container.Resolve<MainViewModel>().PostSelected(this);
+        }
+        private void Dismiss()
+        {
+
+            App.Container.Resolve<MainViewModel>().DismissPost(this);
         }
         #endregion
     }

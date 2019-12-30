@@ -100,6 +100,10 @@ namespace RedditUWP.ViewModels
             this.Thumbnail = redditPostItemViewModel.Thumbnail;
             redditPostItemViewModel.ItWasRead = true;
         }
+        public void DismissPost(RedditPostItemViewModel redditPostItemViewModel)
+        {
+            this.Posts.Remove(redditPostItemViewModel);
+        }
         #endregion
     }
 }
