@@ -38,6 +38,22 @@ namespace RedditUWP.ViewModels
                 return $"{Math.Round((DateTime.Now - this.CreatedUTC).TotalHours)} Hours ago";
             }
         }
+        public RedditPost Base
+        {
+            get
+            {
+                return new RedditPost()
+                {
+                    Id = this.Id,
+                    Title = this.Title,
+                    Author = this.Author,
+                    CreatedUTC = this.CreatedUTC,
+                    ItWasRead = this.ItWasRead,
+                    NumComments = this.NumComments,
+                    Thumbnail = this.Thumbnail
+                };
+            }
+        }
         #endregion
         #region Commands
         public ICommand ItemSelectedCommand

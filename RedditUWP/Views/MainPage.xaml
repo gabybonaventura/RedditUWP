@@ -44,10 +44,33 @@
                 </Grid>
             </NavigationView.PaneFooter>
             <NavigationView.PaneHeader>
-                <TextBlock
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Text="Reddit Posts"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        Text="Reddit Posts"/>
+                    <StackPanel
+                            Grid.Column="1"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
+                        <Button
+                            Command="{Binding RefreshCommand}"
+                            CornerRadius="12">
+                            <FontIcon 
+                                FontFamily="Segoe MDL2 Assets" 
+                                FontSize="15" 
+                                Foreground="Red"
+                                Glyph="&#xE72C;"/>
+                        </Button>
+                        
+
+                    </StackPanel>
+                </Grid>
             </NavigationView.PaneHeader>
             <NavigationView.MenuItemTemplate>
                 <DataTemplate>

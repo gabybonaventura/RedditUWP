@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using Windows.UI.Popups;
 
 namespace RedditUWP.ViewModels
 {
@@ -96,6 +97,10 @@ namespace RedditUWP.ViewModels
         {
             get { return new DelegateCommand(DismissAllPost, null); }
         }
+        public ICommand RefreshCommand
+        {
+            get { return new DelegateCommand(Refresh, null); }
+        }
         #endregion
         #region Methods
         public void PostSelected(RedditPostItemViewModel redditPostItemViewModel)
@@ -103,15 +108,43 @@ namespace RedditUWP.ViewModels
             this.Id = redditPostItemViewModel.Id;
             this.Title = redditPostItemViewModel.Title;
             this.Thumbnail = redditPostItemViewModel.Thumbnail;
-            redditPostItemViewModel.ItWasRead = true;
+            if (this.redditPostLogic.ReadPost(redditPostItemViewModel.Base))
+                redditPostItemViewModel.ItWasRead = true;
         }
-        public void DismissPost(RedditPostItemViewModel redditPostItemViewModel)
+        public async void DismissPost(RedditPostItemViewModel redditPostItemViewModel)
         {
-            this.Posts.Remove(redditPostItemViewModel);
+            var redditPost = mapper.Map<RedditPost>(redditPostItemViewModel);
+            var res = this.redditPostLogic.DismissPost(redditPost);
+            if (res)
+                this.Posts.Remove(redditPostItemViewModel);
+            else
+            {
+                var messageDialog = new MessageDialog("The post could not be discarded, try again later.");
+                await messageDialog.ShowAsync();
+            }
         }
-        private void DismissAllPost()
+        private async void DismissAllPost()
         {
-            this.Posts = new ObservableCollection<RedditPostItemViewModel>();
+            var res = this.redditPostLogic.DismissAllPosts();
+            if (res)
+                this.Posts = new ObservableCollection<RedditPostItemViewModel>();
+            else
+            {
+                var messageDialog = new MessageDialog("The posts could not be discarded, try again later.");
+                await messageDialog.ShowAsync();
+            }
+        }
+        private async void Refresh()
+        {
+            var postsReddit = this.redditPostLogic.GetRedditPost();
+            if (postsReddit != null)
+                this.Posts = new ObservableCollection<RedditPostItemViewModel>
+                            (this.mapper.Map<List<RedditPostItemViewModel>>(postsReddit));
+            else
+            {
+                var messageDialog = new MessageDialog("The posts could not be loaded, try again later.");
+                await messageDialog.ShowAsync();
+            }
         }
         #endregion
     }

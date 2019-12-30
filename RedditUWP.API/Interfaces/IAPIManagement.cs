@@ -7,6 +7,7 @@ namespace RedditUWP.API.Interfaces
 {
     public interface IAPIManagement
     {
+        int ContentLenght { get; set; }
         List<RedditPost> GetRedditPost();
     }
 }

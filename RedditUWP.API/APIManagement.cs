@@ -26,6 +26,7 @@ namespace RedditUWP.API
             request.AddParameter("limit", limit);
             IRestResponse response = client.Execute(request);
             var content = response.Content;
+            this.ContentLenght = content.Length;
             var redditPostApi = RedditPostsApi.FromJson(content);
             var redditPost = mapper.Map<List<RedditPost>>(redditPostApi.Data.Children);
 

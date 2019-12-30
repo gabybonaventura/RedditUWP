@@ -5,6 +5,8 @@ using RedditUWP.API.Interfaces;
 using RedditUWP.API.Models;
 using RedditUWP.BusinessComponents;
 using RedditUWP.BusinessComponents.Interfaces;
+using RedditUWP.DataAccess;
+using RedditUWP.DataAccess.Interfaces;
 using RedditUWP.Entities;
 using RedditUWP.ViewModels;
 using System;
@@ -45,6 +47,7 @@ namespace RedditUWP
 
             containerBuilder.RegisterType<RedditPostLogic>().As<IRedditPostLogic>();
             containerBuilder.RegisterType<APIManagement>().As<IAPIManagement>();
+            containerBuilder.RegisterType<SQLiteRepository>().As<IRepository>();
 
             var mapperConfiguration = new MapperConfiguration(cfg => {
                 cfg.CreateMap<RedditPost, RedditPostItemViewModel>();

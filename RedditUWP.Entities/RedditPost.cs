@@ -1,9 +1,11 @@
 ﻿using System;
+using SQLite.Net.Attributes;
 
 namespace RedditUWP.Entities
 {
     public class RedditPost
     {
+        [PrimaryKey]
         public string Id { get; set; }
         public string Title { get; set; }
         public string Author { get; set; }
