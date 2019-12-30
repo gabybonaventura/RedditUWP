@@ -119,6 +119,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\BooleanToVisibilityConverter.cs" />
     <Compile Include="Services\InstanceLocator.cs" />
     <Compile Include="ViewModels\Base\BindableBase.cs" />
     <Compile Include="ViewModels\Base\DelegateCommand.cs" />

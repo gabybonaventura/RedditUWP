@@ -5,11 +5,16 @@
     xmlns:local="using:RedditUWP"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:converters="using:RedditUWP.Helpers"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     DataContext="{Binding MainViewModel, Source={StaticResource Locator}}">
+    <Page.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="bool2vis"/>
+        <converters:BooleanToVisibilityConverter x:Key="bool2visInverse" OnTrue="Collapsed" OnFalse="Visible"/>
+    </Page.Resources>
 
     <Grid>
         <NavigationView
@@ -82,6 +87,7 @@
                                 HorizontalAlignment="Left"
                                 Margin="5,15,0,0"
                                 VerticalAlignment="Top"
+                                Visibility="{Binding ItWasRead, Converter={StaticResource bool2vis}}"
                                 Width="10" />
                             <StackPanel
                                 Grid.Column="1"
@@ -95,7 +101,7 @@
                                     FontSize="11"
                                     Foreground="White"
                                     Margin="20,15,0,0"
-                                    Text="20 Hours Ago"/>
+                                    Text="{Binding HoursAgo}"/>
                             </StackPanel>
 
                         </Grid>
@@ -163,7 +169,7 @@
                                 Foreground="DarkOrange"
                                 FontSize="11"
                                 Grid.Column="1"
-                                Text="200 Comments"
+                                Text="{Binding NumCommentString}"
                                 VerticalAlignment="Center"/>
                         </Grid>
                         <i:Interaction.Behaviors>
