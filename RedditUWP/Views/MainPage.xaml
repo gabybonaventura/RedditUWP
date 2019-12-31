@@ -17,207 +17,218 @@
     </Page.Resources>
 
     <Grid>
-        <NavigationView
-            IsBackButtonVisible="Collapsed"
-            IsSettingsVisible="False"
-            PaneDisplayMode="Left"
-            MenuItemsSource="{Binding Posts}">
-            <NavigationView.Header>
-                <TextBlock
-                Foreground="Black"
-                Text="{Binding Author}"/>
-            </NavigationView.Header>
-            <NavigationView.PaneFooter>
+        <SplitView IsPaneOpen="True"
+           DisplayMode="Inline"
+           OpenPaneLength="296">
+            <SplitView.Pane>
                 <Grid>
-                    <TextBlock
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="40"/>
+                    </Grid.RowDefinitions>
+                    <Grid
+                        Background="#222222"
+                        Grid.Row="0">
+                        <TextBlock
+                            Foreground="White"
+                            FontSize="16"
+                            FontWeight="SemiBold"
+                            HorizontalAlignment="Center"
+                            Text="Reddit Post"
+                            VerticalAlignment="Center"/>
+                    </Grid>
+
+                    <RefreshContainer
+                        Grid.Row="1">
+                        <i:Interaction.Behaviors>
+                            <core:EventTriggerBehavior EventName="RefreshRequested">
+                                <core:EventTriggerBehavior.Actions>
+                                    <core:InvokeCommandAction Command="{Binding RefreshCommand, Mode=TwoWay}" />
+                                </core:EventTriggerBehavior.Actions>
+                            </core:EventTriggerBehavior>
+                        </i:Interaction.Behaviors>
+                        <ListView
+                            Background="Black"
+                            BorderThickness="0"
+                            Padding="-12"
+                            ItemsSource="{Binding Posts}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid
+                                    Background="Black"
+                                    Height="150">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="6*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="2*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Line 
+                                        Grid.Column="0"
+                                        Grid.Row="0"
+                                        Grid.ColumnSpan="3"
+                                        Stroke="Gray" 
+                                        X2="320" 
+                                        Margin="10,0,10,0"/>
+                                    <Grid
+                                        Grid.Column="0"
+                                        Grid.ColumnSpan="2"
+                                        Grid.Row="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="15"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Ellipse  
+                                            Fill="SteelBlue" 
+                                            Grid.Column="0"
+                                            Height="10" 
+                                            HorizontalAlignment="Left"
+                                            Margin="5,15,0,0"
+                                            VerticalAlignment="Top"
+                                            Visibility="{Binding ItWasRead, Converter={StaticResource bool2vis}}"
+                                            Width="10" />
+                                            <StackPanel
+                                            Grid.Column="1"
+                                            Orientation="Horizontal">
+
+                                                <TextBlock 
+                                                Foreground="White"
+                                                Margin="20,15,0,0"
+                                                Text="{Binding Author}"/>
+                                                <TextBlock 
+                                                FontSize="11"
+                                                Foreground="White"
+                                                Margin="20,15,0,0"
+                                                Text="{Binding HoursAgo}"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    <Image
+                                        Grid.Column="0"
+                                        Grid.Row="1"
+                                        Margin="5,0,0,0"
+                                        HorizontalAlignment="Stretch"
+                                        Source="{Binding Thumbnail}"/>
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="White"
+                                        Grid.Column="1"
+                                        Grid.Row="1"
+                                        HorizontalAlignment="Left"
+                                        Margin="5,0,0,0"
+                                        Text="{Binding Title}"
+                                        TextWrapping="Wrap"
+                                        VerticalAlignment="Center"/>
+                                    <FontIcon 
+                                        FontFamily="Segoe MDL2 Assets" 
+                                        FontSize="10" 
+                                        Foreground="White"
+                                        Glyph="&#xE76C;"
+                                        Grid.RowSpan="3"
+                                        Grid.Column="2"
+                                        Grid.Row="0"/>
+                                    <Grid
+                                        Grid.ColumnSpan="3"
+                                        Grid.Column="0"
+                                        Grid.Row="3"
+                                        Margin="5,2"
+                                        VerticalAlignment="Bottom">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel
+                                            Grid.Column="0"
+                                            Orientation="Horizontal">
+                                            <FontIcon 
+                                                FontFamily="Segoe MDL2 Assets" 
+                                                FontSize="18" 
+                                                FontWeight="Bold"
+                                                Foreground="OrangeRed"
+                                                Glyph="&#xEA39;"
+                                                Grid.Column="0"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Center"/>
+                                            <TextBlock
+                                                Foreground="White"
+                                                FontSize="13"
+                                                Margin="2"
+                                                VerticalAlignment="Center"
+                                                Text="Dismiss Post"/>
+                                            <i:Interaction.Behaviors>
+                                                <core:EventTriggerBehavior EventName="Tapped">
+                                                    <core:EventTriggerBehavior.Actions>
+                                                        <core:InvokeCommandAction Command="{Binding DismissCommand, Mode=TwoWay}" />
+                                                    </core:EventTriggerBehavior.Actions>
+                                                </core:EventTriggerBehavior>
+                                            </i:Interaction.Behaviors>
+                                        </StackPanel>
+                                        <TextBlock
+                                            Foreground="DarkOrange"
+                                            FontSize="11"
+                                            Grid.Column="1"
+                                            Text="{Binding NumCommentString}"
+                                            VerticalAlignment="Center"/>
+                                    </Grid>
+                                    <i:Interaction.Behaviors>
+                                        <core:EventTriggerBehavior EventName="Tapped">
+                                            <core:EventTriggerBehavior.Actions>
+                                                <core:InvokeCommandAction Command="{Binding ItemSelectedCommand, Mode=TwoWay}" />
+                                            </core:EventTriggerBehavior.Actions>
+                                        </core:EventTriggerBehavior>
+                                    </i:Interaction.Behaviors>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                        
+                    </ListView>
+                    </RefreshContainer>
+                    <Grid
+                        Background="Black"
+                        Grid.Row="2">
+                        <TextBlock
                             Foreground="OrangeRed"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             Text="Dismiss all"/>
-                    <i:Interaction.Behaviors>
-                        <core:EventTriggerBehavior EventName="Tapped">
-                            <core:EventTriggerBehavior.Actions>
-                                <core:InvokeCommandAction Command="{Binding DismissAllPostCommand, Mode=TwoWay}" />
-                            </core:EventTriggerBehavior.Actions>
-                        </core:EventTriggerBehavior>
-                    </i:Interaction.Behaviors>
-                </Grid>
-            </NavigationView.PaneFooter>
-            <NavigationView.PaneHeader>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="5*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock
-                        HorizontalAlignment="Center"
-                        Grid.Column="0"
-                        VerticalAlignment="Center"
-                        Text="Reddit Posts"/>
-                    <StackPanel
-                            Grid.Column="1"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center">
-                        <Button
-                            Command="{Binding RefreshCommand}"
-                            CornerRadius="12">
-                            <FontIcon 
-                                FontFamily="Segoe MDL2 Assets" 
-                                FontSize="15" 
-                                Foreground="Red"
-                                Glyph="&#xE72C;"/>
-                        </Button>
-                        
-
-                    </StackPanel>
-                </Grid>
-            </NavigationView.PaneHeader>
-            <NavigationView.MenuItemTemplate>
-                <DataTemplate>
-                    <Grid
-                        Height="150"
-                        Width="320"
-                        Background="Black">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*"/>
-                            <ColumnDefinition Width="6*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="2*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Line 
-                            Grid.Column="0"
-                            Grid.Row="0"
-                            Grid.ColumnSpan="3"
-                            Stroke="Gray" 
-                            X2="320" 
-                            Margin="10,0,10,0"/>
-                        <Grid
-                            Grid.Column="0"
-                            Grid.ColumnSpan="2"
-                            Grid.Row="0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="15"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Ellipse  
-                                Fill="SteelBlue" 
-                                Grid.Column="0"
-                                Height="10" 
-                                HorizontalAlignment="Left"
-                                Margin="5,15,0,0"
-                                VerticalAlignment="Top"
-                                Visibility="{Binding ItWasRead, Converter={StaticResource bool2vis}}"
-                                Width="10" />
-                            <StackPanel
-                                Grid.Column="1"
-                                Orientation="Horizontal">
-
-                                <TextBlock 
-                                    Foreground="White"
-                                    Margin="20,15,0,0"
-                                    Text="{Binding Author}"/>
-                                <TextBlock 
-                                    FontSize="11"
-                                    Foreground="White"
-                                    Margin="20,15,0,0"
-                                    Text="{Binding HoursAgo}"/>
-                            </StackPanel>
-
-                        </Grid>
-                        <Image
-                            Grid.Column="0"
-                            Grid.Row="1"
-                            Margin="5,0,0,0"
-                            HorizontalAlignment="Stretch"
-                            Source="{Binding Thumbnail}"/>
-                        <TextBlock
-                            FontSize="12"
-                            Foreground="White"
-                            Grid.Column="1"
-                            Grid.Row="1"
-                            HorizontalAlignment="Left"
-                            Margin="5,0,0,0"
-                            Text="{Binding Title}"
-                            TextWrapping="Wrap"
-                            VerticalAlignment="Center"/>
-                        <FontIcon 
-                            FontFamily="Segoe MDL2 Assets" 
-                            FontSize="10" 
-                            Foreground="White"
-                            Glyph="&#xE76C;"
-                            Grid.RowSpan="3"
-                            Grid.Column="3"
-                            Grid.Row="0"/>
-                        <Grid
-                            Grid.ColumnSpan="3"
-                            Grid.Column="0"
-                            Grid.Row="3"
-                            Margin="5,2"
-                            VerticalAlignment="Bottom">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <StackPanel
-                                Grid.Column="0"
-                                Orientation="Horizontal">
-                                <FontIcon 
-                                    FontFamily="Segoe MDL2 Assets" 
-                                    FontSize="18" 
-                                    FontWeight="Bold"
-                                    Foreground="OrangeRed"
-                                    Glyph="&#xEA39;"
-                                    Grid.Column="0"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"/>
-                                <TextBlock
-                                    Foreground="White"
-                                    FontSize="13"
-                                    Margin="2"
-                                    VerticalAlignment="Center"
-                                    Text="Dismiss Post"/>
-                                <i:Interaction.Behaviors>
-                                    <core:EventTriggerBehavior EventName="Tapped">
-                                        <core:EventTriggerBehavior.Actions>
-                                            <core:InvokeCommandAction Command="{Binding DismissCommand, Mode=TwoWay}" />
-                                        </core:EventTriggerBehavior.Actions>
-                                    </core:EventTriggerBehavior>
-                                </i:Interaction.Behaviors>
-                            </StackPanel>
-                            <TextBlock
-                                Foreground="DarkOrange"
-                                FontSize="11"
-                                Grid.Column="1"
-                                Text="{Binding NumCommentString}"
-                                VerticalAlignment="Center"/>
-                        </Grid>
                         <i:Interaction.Behaviors>
                             <core:EventTriggerBehavior EventName="Tapped">
                                 <core:EventTriggerBehavior.Actions>
-                                    <core:InvokeCommandAction Command="{Binding ItemSelectedCommand, Mode=TwoWay}" />
+                                    <core:InvokeCommandAction Command="{Binding DismissAllPostCommand, Mode=TwoWay}" />
                                 </core:EventTriggerBehavior.Actions>
                             </core:EventTriggerBehavior>
                         </i:Interaction.Behaviors>
                     </Grid>
-                </DataTemplate>
-            </NavigationView.MenuItemTemplate>
+                </Grid>
+
+            </SplitView.Pane>
+
             <Frame>
+                
                 <StackPanel
-                    Margin="20"
-                    Background="White">
+                    Background="White"
+                    Grid.Row="1"
+                    Margin="20">
+                    <TextBlock
+                        Padding="0,10"
+                        FontSize="16"
+                        Text="{Binding Author}"
+                        VerticalAlignment="Center"/>
                     <Image
                         Height="100"
                         VerticalAlignment="Top"
                         Source="{Binding Thumbnail}"/>
                     <TextBlock
+                        FontSize="12"
                         Padding="0,10"
                         Text="{Binding Title}"/>
                 </StackPanel>
             </Frame>
-        </NavigationView>
+        </SplitView>
+
     </Grid>
 </Page>

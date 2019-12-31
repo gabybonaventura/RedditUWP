@@ -23,11 +23,6 @@ namespace RedditUWP.ViewModels
         {
             this.redditPostLogic = redditPostLogic;
             this.mapper = mapper;
-
-            this.Id = "10";
-            this.Thumbnail = "https://a.thumbs.redditmedia.com/NPbKE2FAaO97ci2jIVCy5L04nEWd60_nS52LdmMQMV4.jpg";
-            this.Author = "author";
-            this.Title = "title";
             
             var postsReddit = this.redditPostLogic.GetRedditPost();
 
