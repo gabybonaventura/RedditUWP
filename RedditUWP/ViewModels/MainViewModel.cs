@@ -19,10 +19,16 @@ namespace RedditUWP.ViewModels
         private IMapper mapper;
         #endregion
         #region Constructors
-        public MainViewModel(IRedditPostLogic redditPostLogic, IMapper mapper)
+        public MainViewModel(IRedditPostLogic redditPostLogic)
         {
             this.redditPostLogic = redditPostLogic;
-            this.mapper = mapper;
+            var mapperConfiguration = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<RedditPost, RedditPostItemViewModel>()
+                .ForMember(dest => dest.MainViewModel, opt => opt.MapFrom(src => this));
+                //This mapping should be done here to avoid calling the mainviewmodel from the dependency injector container
+            });
+            this.mapper = mapperConfiguration.CreateMapper();
             
             var postsReddit = this.redditPostLogic.GetRedditPost();
 

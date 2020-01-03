@@ -1,10 +1,10 @@
-﻿using Autofac;
-using RedditUWP.Entities;
+﻿using RedditUWP.Entities;
 using RedditUWP.ViewModels.Base;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+
 
 namespace RedditUWP.ViewModels
 {
@@ -13,9 +13,12 @@ namespace RedditUWP.ViewModels
         #region Atributtes
         private bool itWasRemoved;
         private bool itWasRead;
+        private MainViewModel mainViewModel;
         #endregion
         #region Properties
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public MainViewModel MainViewModel { get; private set; }
         public bool ItWasRead
         {
             get
@@ -71,11 +74,11 @@ namespace RedditUWP.ViewModels
         {
             if (this.itWasRemoved)
                 return;
-            App.Container.Resolve<MainViewModel>().PostSelected(this);
+            MainViewModel.PostSelected(this);
         }
         private void Dismiss()
         {
-            App.Container.Resolve<MainViewModel>().DismissPost(this);
+            MainViewModel.DismissPost(this);
             this.itWasRemoved = true;
         }
 

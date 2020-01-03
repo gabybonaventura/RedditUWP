@@ -1,15 +1,13 @@
 ﻿using RedditUWP.ViewModels;
-using Autofac;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace RedditUWP.Services
 {
     class InstanceLocator
     {
         #region Properties
-        public MainViewModel MainViewModel
-        {
-            get { return App.Container.Resolve<MainViewModel>(); }
-        }
+        public MainViewModel MainViewModel { get; } = (App.Current as App).Container.GetService<MainViewModel>();
+
         #endregion
     }
 }

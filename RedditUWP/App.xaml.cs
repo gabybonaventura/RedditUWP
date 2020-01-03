@@ -1,5 +1,4 @@
-﻿using Autofac;
-using AutoMapper;
+﻿using AutoMapper;
 using RedditUWP.API;
 using RedditUWP.API.Interfaces;
 using RedditUWP.API.Models;
@@ -15,6 +14,8 @@ using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
 
 namespace RedditUWP
 {
@@ -31,26 +32,21 @@ namespace RedditUWP
         {
             this.InitializeComponent();
 
-            Container = ConfigureServices();
 
             this.Suspending += OnSuspending;
         }
 
-        public static IContainer Container { get; set; }
+        public IServiceProvider Container { get; private set; }
 
-        private IContainer ConfigureServices()
+        private IServiceProvider RegisterServices()
         {
-            var containerBuilder = new ContainerBuilder();
-
-            containerBuilder.RegisterType<MainViewModel>()
-                .SingleInstance();
-
-            containerBuilder.RegisterType<RedditPostLogic>().As<IRedditPostLogic>();
-            containerBuilder.RegisterType<APIManagement>().As<IAPIManagement>();
-            containerBuilder.RegisterType<SQLiteRepository>().As<IRepository>();
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddTransient<IRedditPostLogic, RedditPostLogic>();
+            serviceCollection.AddTransient<IAPIManagement, APIManagement>();
+            serviceCollection.AddTransient<IRepository, SQLiteRepository>();
+            serviceCollection.AddSingleton<MainViewModel>();
 
             var mapperConfiguration = new MapperConfiguration(cfg => {
-                cfg.CreateMap<RedditPost, RedditPostItemViewModel>();
                 cfg.CreateMap<Child, RedditPost>()
                 .ForMember(dest => dest.Author, opt => opt.MapFrom(src => src.Data.Author))
                 .ForMember(
@@ -63,21 +59,13 @@ namespace RedditUWP
                 .ForMember(dest => dest.NumComments, opt => opt.MapFrom(src => src.Data.NumComments))
                 .ForMember(dest => dest.Thumbnail, opt => opt.MapFrom(src => src.Data.Thumbnail));
             });
-            containerBuilder.Register(
-                ctx =>
-                {
-                    var scope = ctx.Resolve<ILifetimeScope>();
-                    return new Mapper(
-                        mapperConfiguration,
-                        scope.Resolve);
-                })
-                .As<IMapper>()
-                .InstancePerLifetimeScope();
+            
+            IMapper mapper = mapperConfiguration.CreateMapper();
+            serviceCollection.AddSingleton(mapper);
 
-            var container = containerBuilder.Build();
-
-            return container;
+            return serviceCollection.BuildServiceProvider();
         }
+
 
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
@@ -87,6 +75,7 @@ namespace RedditUWP
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
+            Container = RegisterServices();
 
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
@@ -105,6 +94,8 @@ namespace RedditUWP
                 // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
             }
+
+
 
             if (e.PrelaunchActivated == false)
             {
